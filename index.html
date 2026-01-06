@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facultad de Psicología - UNICA | Sitio Oficial</title>
+    
+    <!-- FAVICON AGREGADO -->
+    <link rel="icon" href="image (1).png" type="image/png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Tipografías Académicas y Profesionales (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        
+        .menu-toggle {
+    margin-left: auto;
+}
+
+        /* --- 1. VARIABLES Y CONFIGURACIÓN BASE --- */
+        :root {
+            /* Paleta Institucional Refinada */
+            --color-primario: #003366;    /* Azul Institucional Oscuro */
+            --color-secundario: #005a96;  /* Azul UNICA Original */
+            --color-acento: #0070bb;      /* Azul Claro Interactivo */
+            --color-dorado: #D4AF37;      /* Dorado Académico (menos amarillo, más elegante) */
+            
+            /* Fondos y Textos */
+            --bg-body: #f8f9fa;           /* Gris muy claro para fondo */
+            --bg-blanco: #ffffff;
+            --texto-principal: #2c3e50;   /* Gris oscuro azulado para lectura */
+            --texto-secundario: #596575;  /* Gris medio */
+            --borde-suave: #e1e4e8;
+            
+            /* Sombras "Soft UI" */
+            --sombra-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --sombra-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif; /* Texto cuerpo muy legible */
+            line-height: 1.7;
+            color: var(--texto-principal);
+            background-color: var(--bg-body);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif; /* Títulos con autoridad */
+            font-weight: 700;
+            color: var(--color-primario);
+            letter-spacing: -0.5px;
+        }
+
+        /* Utilidad para contenedores */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- 2. ENCABEZADO Y NAVEGACIÓN --- */
+        
+        /* Barra Superior (Top Bar) - Toque Institucional */
+        .top-bar {
+            background-color: var(--color-primario);
+            color: rgba(255,255,255,0.9);
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-info span { margin-right: 15px; }
+
+        /* Navegación Principal */
+        nav {
+            background-color: var(--bg-blanco); /* Fondo blanco limpio */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0.8rem 0;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--color-primario);
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        .logo-symbol {
+            font-size: 1.8rem;
+            color: var(--color-dorado);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: var(--texto-principal);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--color-acento);
+            border-bottom-color: var(--color-dorado);
+        }
+
+        /* --- 3. HERO SECTION (PORTADA) --- */
+        .hero {
+            position: relative;
+            height: 75vh; /* Un poco más alto */
+            /* Gradiente superpuesto más profesional para legibilidad */
+            background: linear-gradient(135deg, rgba(0, 51, 102, 0.85) 0%, rgba(0, 90, 150, 0.7) 100%), 
+                        url('https://www.unica.edu.pe/psicologia/info/psicologia_logo.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Efecto Parallax sutil */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 4rem; /* Más grande e impactante */
+            margin-bottom: 10px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .hero p.motto {
+            font-size: 1.1rem;
+            font-style: italic;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* --- 4. SECCIONES GENERALES --- */
+        section {
+            padding: 90px 0;
+            position: relative;
+        }
+        
+        section:nth-child(even) {
+            background-color: var(--bg-blanco);
+        }
+        section:nth-child(odd) {
+            background-color: var(--bg-body);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: var(--color-primario);
+            margin-bottom: 15px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-header h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--color-dorado);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- 5. MISIÓN Y VISIÓN (Tarjetas) --- */
+        .mision-vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .mv-card {
+            background: var(--bg-blanco);
+            padding: 50px 40px;
+            border-radius: 8px; /* Bordes menos redondeados para look serio */
+            box-shadow: var(--sombra-card);
+            border-top: 5px solid var(--color-secundario);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--sombra-hover);
+            border-top-color: var(--color-dorado);
+        }
+
+        .mv-card::before {
+            content: 'Ψ';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 10rem;
+            color: rgba(0,0,0,0.03);
+            font-family: serif;
+            pointer-events: none;
+        }
+
+        .mv-card h3 {
+            color: var(--color-secundario);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--borde-suave);
+            padding-bottom: 15px;
+        }
+
+        /* --- 6. HISTORIA (Timeline Style) --- */
+        .historia-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            font-size: 1.1rem;
+            color: var(--texto-secundario);
+        }
+
+        .historia-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .hito-card {
+            background: var(--bg-blanco);
+            padding: 30px;
+            border-radius: 6px;
+            border: 1px solid var(--borde-suave);
+            box-shadow: var(--sombra-card);
+            transition: 0.3s;
+            position: relative;
+        }
+        
+        .hito-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--color-secundario);
+            border-radius: 6px 6px 0 0;
+            transition: background 0.3s;
+        }
+
+        .hito-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--sombra-hover);
+        }
+        .hito-card:hover::before {
+            background: var(--color-dorado);
+        }
+
+        .hito-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--color-primario);
+        }
+        .hito-card p { font-size: 0.95rem; color: var(--texto-secundario); }
+
+        /* --- 7. CAMPO LABORAL (Interactivo) --- */
+        .laboral-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .laboral-item {
+            background: var(--bg-blanco);
+            border: 1px solid var(--borde-suave);
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .laboral-item:hover, .laboral-item.active-area {
+            background-color: var(--color-primario);
+            color: white;
+            border-color: var(--color-primario);
+            box-shadow: var(--sombra-hover);
+        }
+        
+        .laboral-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+            transition: transform 0.3s;
+        }
+        
+        .laboral-item:hover .laboral-icon { transform: scale(1.1); color: var(--color-dorado); }
+        .laboral-item h4 { margin-bottom: 5px; transition: color 0.3s; }
+        .laboral-item:hover h4, .laboral-item.active-area h4 { color: white; }
+        .laboral-item p.subtitle-lab { font-size: 0.9rem; opacity: 0.8; }
+
+        .detalle-content {
+            display: none;
+            grid-column: 1 / -1; /* Ocupa todo el ancho cuando se abre */
+            background: #fff;
+            padding: 30px;
+            border-left: 4px solid var(--color-dorado);
+            border-radius: 0 8px 8px 0;
+            box-shadow: var(--sombra-hover);
+            margin-top: 10px;
+            animation: slideDown 0.4s ease-out;
+            text-align: left;
+            color: var(--texto-principal);
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 8. MALLA CURRICULAR (Horizontal Scroll Refinado) --- */
+        .malla-wrapper {
+            background-color: var(--bg-body);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--borde-suave);
+        }
+
+        .malla-container {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            padding: 20px 5px 30px 5px;
+            /* Scrollbar styling */
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-secundario) #eee;
+        }
+        
+        .malla-container::-webkit-scrollbar { height: 8px; }
+        .malla-container::-webkit-scrollbar-track { background: #eee; border-radius: 4px; }
+        .malla-container::-webkit-scrollbar-thumb { background-color: var(--color-secundario); border-radius: 4px; }
+
+        .semestre-card {
+            min-width: 260px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--sombra-card);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .semestre-header {
+            background: var(--color-secundario);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-bottom: 3px solid var(--color-dorado);
+        }
+
+        .semestre-card ul {
+            list-style: none;
+            padding: 15px;
+            font-size: 0.85rem;
+        }
+
+        .semestre-card li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: var(--texto-secundario);
+            display: flex;
+            align-items: center;
+        }
+        .semestre-card li::before {
+            content: '•';
+            color: var(--color-acento);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .semestre-card li:last-child { border-bottom: none; }
+
+        /* --- 9. DOCENTES (Tabla Institucional) --- */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: var(--sombra-card);
+            border: 1px solid var(--borde-suave);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            font-size: 0.95rem;
+        }
+
+        thead {
+            background-color: var(--color-primario);
+            color: white;
+        }
+
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+        }
+
+        tr { border-bottom: 1px solid var(--borde-suave); }
+        tr:last-child { border-bottom: none; }
+        
+        tbody tr:nth-child(even) { background-color: #f8faff; }
+        tbody tr:hover { background-color: #eef4ff; }
+
+        /* --- 10. INFRAESTRUCTURA (Galería Grid) --- */
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .galeria-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: var(--sombra-card);
+            cursor: pointer;
+            height: 250px;
+        }
+
+        .galeria-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .galeria-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* --- 11. FAQ y FOOTER --- */
+        .faq-wrapper { max-width: 800px; margin: 0 auto; }
+        
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid var(--borde-suave);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 18px 25px;
+            background: white;
+            border: none;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--color-primario);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover { background: #f0f4f8; }
+        .faq-question::after { content: '+'; font-size: 1.2rem; }
+        
+        .faq-answer {
+            display: none;
+            padding: 20px 25px;
+            background: #fafbfc;
+            border-top: 1px solid var(--borde-suave);
+            color: var(--texto-secundario);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #111; /* Casi negro para contraste total */
+            color: #ccc;
+            padding: 80px 0 30px;
+            font-size: 0.9rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--color-dorado);
+        }
+
+        .footer-col a {
+            color: #aaa;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+        .footer-col a:hover { color: var(--color-dorado); padding-left: 5px; }
+
+        .map-wrapper {
+            width: 100%;
+            height: 350px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 20px;
+            border: 1px solid #333;
+        }
+
+        .copyright {
+            border-top: 1px solid #333;
+            text-align: center;
+            padding-top: 30px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-content { flex-direction: column; gap: 15px; }
+            nav ul { gap: 15px; flex-wrap: wrap; justify-content: center; }
+            .mision-vision-grid { grid-template-columns: 1fr; }
+            .top-bar { display: none; /* Ahorra espacio en móvil */ }
+            .logo { font-size: 1.1rem; }
+        }
+
+        /* --- MODAL ESTILO --- */
+        .img-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .img-modal-content {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s ease;
+        }
+        .img-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .img-close:hover { color: var(--color-dorado); }
+        @keyframes zoomIn { from {transform: scale(0.9); opacity: 0;} to {transform: scale(1); opacity: 1;} }
+
+        .icon-facebook {
+    width: 40px;
+    height: 40px;
+    background-color: #1a1a1a; /* oscuro */
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px; /* cuadrado suavizado */
+    font-size: 20px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.icon-facebook:hover {
+    background-color: #1877f2; /* azul Facebook */
+    transform: scale(1.1);
+}
+    
+    /* LOGO SEGURO */
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-text {
+    color: rgba(19, 8, 77, 0.932);
+    font-size: 1.3rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.logo-img {
+    width: 40px;
+    height: auto;
+}
+
+/* ===== MENU HAMBURGUESA ===== */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--color-primario);
+    transition: 0.3s;
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav ul {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        display: none;
+        padding: 20px 0;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    nav ul.show {
+        display: flex;
+    }
+}
+
+/* X ANIMADA */
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+    </style>
+    
+    <script>
+        // Lógica original preservada para cálculo de años
+        function calcularAnios() {
+            const anioFundacion = 1995; 
+            const hoy = new Date();
+            const anios = hoy.getFullYear() - anioFundacion;
+            return anios;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const aniosElement = document.getElementById('anios-fundacion');
+            if (aniosElement) {
+                aniosElement.textContent = calcularAnios();
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR INSTITUCIONAL -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-info">
+                <span>📞 056-283841</span>
+                <span>📧 psicologia@unica.edu.pe</span>
+            </div>
+            <div class="top-links">
+                <span>Portal Universitario UNICA</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <nav>
+        <div class="container nav-content">
+            <div class="logo-wrapper">
+    <img src="https://www.unica.edu.pe/psicologia/info/psicologia_logo.png" alt="Logo Psicología" class="logo-img">
+    <span class="logo-text">Facultad de Psicología</span>
+</div>
+<button class="menu-toggle" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#historia">Historia</a></li>
+                <li><a href="#carrera">Carrera</a></li>
+                <li><a href="#malla">Académico</a></li>
+                <li><a href="#docentes">Plana Docente</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero" id="inicio">
+        <span class="subtitle">Universidad Nacional "San Luis Gonzaga"</span>
+        <h1>UNICA</h1>
+        <p class="motto">Formando líderes éticos en el estudio del comportamiento humano.</p>
+    </header>
+
+    <main>
+        <!-- MISIÓN Y VISIÓN -->
+        <section id="nosotros">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Identidad Institucional</h2>
+                    <p>Nuestros pilares fundamentales</p>
+                </div>
+                
+                <div class="mision-vision-grid">
+                    <div class="mv-card">
+                        <h3>VISIÓN</h3>
+                        <p>Ser una facultad líder en la formación de psicólogos íntegros, competentes y comprometidos con el desarrollo humano, reconocida por su excelencia académica, su aporte científico y su impacto positivo en la sociedad.</p>
+                    </div>
+                    <div class="mv-card">
+                        <h3>MISIÓN</h3>
+                        <p>Formar profesionales en psicología con sólidos fundamentos científicos, éticos y humanistas, capaces de comprender, evaluar e intervenir en la conducta humana para promover el bienestar individual y social.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- HISTORIA -->
+        <section id="historia">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Trayectoria Histórica</h2>
+                </div>
+                <p class="historia-intro">
+                    La Facultad de Psicología de la UNICA ha marcado un hito en la región, formando profesionales con visión científica y humanista. A lo largo de nuestros más de 
+                    <strong id="anios-fundacion" style="color: var(--color-acento);">XX</strong> años de trayectoria, hemos evolucionado constantemente para ofrecer una educación de calidad, culminando en la reciente construcción de nuestra moderna infraestructura.
+                </p>
+                
+                <div class="historia-grid">
+                    <div class="hito-card">
+                        <h4>Raíces de la Psicología</h4>
+                        <p>Nuestra facultad nace del compromiso de la UNICA por institucionalizar el estudio científico del comportamiento humano y la salud mental en el sur del Perú.</p>
+                    </div>
+                    <div class="hito-card">
+                        <h4>Primera Decana</h4>
+                        <p>La Dra. Luisa Elizabeth Vargas Reyes lideró la facultad impulsando una gestión enfocada en la excelencia académica y la acreditación.</p>
+                    </div>
+                    <div class="hito-card">
+                        <h4>Inauguración de Obra (2023)</h4>
+                        <p>Hito histórico: Colocación de la primera piedra en Octubre de 2023 por el Rector Dr. Jorge Eduardo Moreno Legua y el Decano Dr. Máximo Sevillano Díaz.</p>
+                    </div>
+                    <div class="hito-card">
+                        <h4>Compromiso Social</h4>
+                        <p>Desarrollamos proyectos de extensión social, ofreciendo apoyo psicológico y programas comunitarios para poblaciones vulnerables en la región de Ica.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAMPO LABORAL -->
+        <section id="carrera">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Perfil y Campo Laboral</h2>
+                    <p>Áreas de desempeño del Psicólogo UNICA</p>
+                </div>
+
+                <div class="laboral-grid">
+                    <!-- Salud -->
+                    <div class="laboral-item" onclick="toggleDetalle(this, 'detalle-salud')">
+                        <span class="laboral-icon">🏥</span>
+                        <h4>Psicología Clínica</h4>
+                        <p class="subtitle-lab">Hospitales y Salud</p>
+                    </div>
+                    <div id="detalle-salud" class="detalle-content">
+                        <p><strong>Área Clínica y de la Salud:</strong> El psicólogo se desempeña en hospitales, clínicas, centros de salud y consultorios privados. Su labor se orienta a la evaluación, diagnóstico y tratamiento de problemas emocionales, conductuales y mentales, así como al acompañamiento psicológico de pacientes con enfermedades crónicas o situaciones de crisis.</p>
+                    </div>
+
+                    <!-- Educación -->
+                    <div class="laboral-item" onclick="toggleDetalle(this, 'detalle-edu')">
+                        <span class="laboral-icon">🏫</span>
+                        <h4>Psicología Educativa</h4>
+                        <p class="subtitle-lab">Instituciones Educativas</p>
+                    </div>
+                    <div id="detalle-edu" class="detalle-content">
+                        <p><strong>Área Educativa:</strong> Interviene en instituciones de educación básica y superior, apoyando el desarrollo emocional, cognitivo y social de los estudiantes. Sus funciones incluyen la orientación vocacional, la detección de dificultades de aprendizaje y la prevención del acoso escolar.</p>
+                    </div>
+
+                    <!-- Organizacional -->
+                    <div class="laboral-item" onclick="toggleDetalle(this, 'detalle-org')">
+                        <span class="laboral-icon">🏢</span>
+                        <h4>Psicología Organizacional</h4>
+                        <p class="subtitle-lab">Recursos Humanos</p>
+                    </div>
+                    <div id="detalle-org" class="detalle-content">
+                        <p><strong>Área Organizacional:</strong> Trabaja en empresas públicas y privadas en la gestión del talento humano. Se encarga de la selección y capacitación de personal, evaluación del desempeño, mejora del clima laboral y desarrollo del liderazgo.</p>
+                    </div>
+
+                    <!-- Forense -->
+                    <div class="laboral-item" onclick="toggleDetalle(this, 'detalle-for')">
+                        <span class="laboral-icon">⚖️</span>
+                        <h4>Psicología Forense</h4>
+                        <p class="subtitle-lab">Sistema Judicial</p>
+                    </div>
+                    <div id="detalle-for" class="detalle-content">
+                        <p><strong>Área Forense:</strong> Colabora con juzgados y fiscalías realizando evaluaciones periciales e informes técnicos. Interviene en casos de violencia familiar, custodia de menores y responsabilidad penal, aportando evidencia científica.</p>
+                    </div>
+
+                    <!-- Social -->
+                    <div class="laboral-item" onclick="toggleDetalle(this, 'detalle-soc')">
+                        <span class="laboral-icon">👥</span>
+                        <h4>Psicología Social</h4>
+                        <p class="subtitle-lab">Proyectos Comunitarios</p>
+                    </div>
+                    <div id="detalle-soc" class="detalle-content">
+                        <p><strong>Área Social-Comunitaria:</strong> Trabaja en ONGs y programas sociales enfocándose en la prevención de problemáticas, promoción de la salud mental comunitaria, inclusión social y fortalecimiento de grupos vulnerables.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PREGUNTAS FRECUENTES -->
+        <section id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Preguntas Frecuentes</h2>
+                </div>
+                <div class="faq-wrapper">
+                    <div class="faq-item">
+                        <button class="faq-question">¿Qué habilidades debe tener un estudiante de Psicología?</button>
+                        <div class="faq-answer">
+                            <p>Un estudiante de Psicología debe tener interés por el comportamiento humano, capacidad de escucha, empatía, pensamiento crítico y compromiso ético.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">¿La carrera de Psicología solo se enfoca en la terapia?</button>
+                        <div class="faq-answer">
+                            <p>No. La Psicología abarca diversos campos como el organizacional, educativo, social, forense e investigación, además del área clínica.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">¿Dónde se realizan las prácticas profesionales?</button>
+                        <div class="faq-answer">
+                            <p>Las prácticas se realizan en hospitales, instituciones educativas, empresas, centros comunitarios, ONGs y entidades públicas bajo convenios institucionales.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">¿La Psicología tiene impacto social?</button>
+                        <div class="faq-answer">
+                            <p>Sí. La Psicología contribuye directamente al bienestar emocional, la salud mental pública, la convivencia social y la mejora de la calidad de vida.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MALLA CURRICULAR -->
+        <section id="malla">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Malla Curricular</h2>
+                    <p>Plan de Estudios Semestral</p>
+                </div>
+
+                <div class="malla-wrapper">
+                    <div class="malla-container">
+                        <div class="semestre-card">
+                            <div class="semestre-header">I Ciclo</div>
+                            <ul>
+                                <li>Estrategia del aprendizaje</li>
+                                <li>Deporte y cultura</li>
+                                <li>Química general</li>
+                                <li>Matemática Básica</li>
+                                <li>Psicología general</li>
+                            </ul>
+                        </div>
+
+                        <div class="semestre-card">
+                            <div class="semestre-header">II Ciclo</div>
+                            <ul>
+                                <li>Sociología General</li>
+                                <li>Estadística Descriptiva</li>
+                                <li>Biología Humana</li>
+                                <li>Metodología del Estudio</li>
+                                <li>Biofísica</li>
+                            </ul>
+                        </div>
+
+                        <div class="semestre-card">
+                            <div class="semestre-header">III Ciclo</div>
+                            <ul>
+                                <li>Psicología del Desarrollo I</li>
+                                <li>Estadística Inferencial</li>
+                                <li>Neuroanatomía</li>
+                                <li>Metodología de la Investigación</li>
+                                <li>Filosofía</li>
+                            </ul>
+                        </div>
+
+                        <div class="semestre-card">
+                            <div class="semestre-header">IV Ciclo</div>
+                            <ul>
+                                <li>Psicología del Desarrollo II</li>
+                                <li>Psicología Social</li>
+                                <li>Psicología del Aprendizaje</li>
+                                <li>Psicobiología</li>
+                                <li>Redacción Científica</li>
+                            </ul>
+                        </div>
+
+                        <div class="semestre-card">
+                            <div class="semestre-header">V Ciclo</div>
+                            <ul>
+                                <li>Psicopatología I</li>
+                                <li>Psicología Educativa</li>
+                                <li>Psicología Organizacional</li>
+                                <li>Técnicas de Entrevista</li>
+                                <li>Investigación Aplicada</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="semestre-card">
+                            <div class="semestre-header">VI Ciclo</div>
+                            <ul>
+                                <li>Psicopatología II</li>
+                                <li>Psicología Clínica</li>
+                                <li>Psicología Educativa II</li>
+                                <li>Evaluación Psicológica I</li>
+                                <li>Diseño de Investigación</li>
+                            </ul>
+                        </div>
+
+                        <div class="semestre-card">
+                            <div class="semestre-header">VII Ciclo</div>
+                            <ul>
+                                <li>Psicología Forense</li>
+                                <li>Psicología Organizacional II</li>
+                                <li>Evaluación Psicológica II</li>
+                                <li>Técnicas Psicoterapéuticas</li>
+                                <li>Estadística Aplicada</li>
+                            </ul>
+                        </div>
+
+                        <div class="semestre-card">
+                            <div class="semestre-header">VIII Ciclo</div>
+                            <ul>
+                                <li>Intervención Psicológica</li>
+                                <li>Psicología Comunitaria</li>
+                                <li>Orientación y Consejería</li>
+                                <li>Ética Profesional</li>
+                                <li>Proyecto de Investigación</li>
+                            </ul>
+                        </div>
+
+                        <div class="semestre-card">
+                            <div class="semestre-header">IX Ciclo</div>
+                            <ul>
+                                <li>Internado Preprofesional I</li>
+                                <li>Psicología de la Salud</li>
+                                <li>Gestión del Talento Humano</li>
+                                <li>Seminario de Tesis I</li>
+                            </ul>
+                        </div>
+
+                        <div class="semestre-card">
+                            <div class="semestre-header">X Ciclo</div>
+                            <ul>
+                                <li>Internado Preprofesional II</li>
+                                <li>Psicología de la Intervención Social</li>
+                                <li>Seminario de Tesis II</li>
+                                <li>Deontología Profesional</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DOCENTES -->
+        <section id="docentes">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Plana Docente</h2>
+                    <p>Cuerpo académico de excelencia</p>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">N°</th>
+                                <th>Apellidos y Nombres</th>
+                                <th>Categoría Docente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>01</td><td>CAICO SANCHEZ, ISAUL GIAMPIERO</td><td>ORDINARIO AUXILIAR</td></tr>
+                            <tr><td>02</td><td>CARHUAYO ASCENCIO, RAFAEL OCTAVIO</td><td>ORDINARIO ASOCIADO</td></tr>
+                            <tr><td>03</td><td>CHAVEZ DEL CASTILLO, MARGARITA YRMA</td><td>ORDINARIO AUXILIAR</td></tr>
+                            <tr><td>04</td><td>CHACALIAZA SUTTA, VICTOR</td><td>ORDINARIO AUXILIAR</td></tr>
+                            <tr><td>05</td><td>FLORES ROJAS, DIANA FIORELLA</td><td>ORDINARIO AUXILIAR</td></tr>
+                            <tr><td>06</td><td>HUAMAN QUISPE, ROSA MARIA</td><td>ORDINARIO AUXILIAR</td></tr>
+                            <tr><td>07</td><td>FRANCO JIMENEZ, RULMAN ANDREI</td><td>ORDINARIO AUXILIAR</td></tr>
+                            <tr><td>08</td><td>GUGLIERMINO GALLEGOS, LORENA MILAGROS</td><td>ORDINARIO AUXILIAR</td></tr>
+                            <tr><td>09</td><td>HUAMAN CAYO, ALEX MARTIN</td><td>ORDINARIO ASOCIADO</td></tr>
+                            <tr><td>10</td><td>PALACIOS GUILLEN, FENIA MAITEE</td><td>ORDINARIO AUXILIAR</td></tr>
+                            <tr><td>11</td><td>PARRA AÑAGUARI, TOMAS EDUARDO</td><td>ORDINARIO PRINCIPAL</td></tr>
+                            <tr><td>12</td><td>ROJAS CHACALTANA, SERGIO ARTURO</td><td>ORDINARIO AUXILIAR</td></tr>
+                            <tr><td>13</td><td>SEVILLANO DIAZ, MAXIMO ISAAC</td><td>ORDINARIO PRINCIPAL</td></tr>
+                            <tr><td>14</td><td>SUKARI CALLASACA, YOLANDA RUTH</td><td>ORDINARIO AUXILIAR</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- INFRAESTRUCTURA -->
+        <section id="infraestructura">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nuestra Infraestructura</h2>
+                </div>
+                <div class="galeria">
+                    <div class="galeria-item">
+                        <img src="https://scontent.fpio1-1.fna.fbcdn.net/v/t39.30808-6/485139717_668158062394772_5510005736339132329_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGPEl1r6wbX3rKos69hBg317KdYKtRS7WTsp1gq1FLtZCSGb_gILoOcVTWVfptu7tShMjk5Cy9sa6O0n0qvYrmL&_nc_ohc=mN2sIJF2uBoQ7kNvwH0wfeF&_nc_oc=Adn083SEEEvoUM8Viski1zp1jx6yRVSCNUDDxIjjOMJoc6-HrW4r5trXqlMs3RjZjen46PSvLHtVbfiXBzPE4l3N&_nc_zt=23&_nc_ht=scontent.fpio1-1.fna&_nc_gid=B3CPDbjzx0ps30-pD6QhtQ&oh=00_AfnGZNZs6sGxNbBUi427ExTIXPTHDzhQ6ol48xovDwEGQw&oe=695A0F96" class="img-expand" alt="Fachada Facultad">
+                    </div>
+                    <div class="galeria-item">
+                        <img src="https://scontent.fpio1-1.fna.fbcdn.net/v/t39.30808-6/484065296_668157955728116_8971951854250793698_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeECitY0b4L3rgPHlxo75U28WzNGtS6oYXVbM0a1LqhhdXmyS8h7CpLoUbXhpljDO80FGdQEmk9Es4lZD_8expjj&_nc_ohc=JJWWeuX6uDoQ7kNvwFy0fMv&_nc_oc=AdmjRRURmEBpDsi4gex6aGsuuVPX38ZHaQF3F1TgTMIFp-Hw_qUC6oKQ4CB3Djkmtf5Jbv570wPi1oFmNd37ZAjT&_nc_zt=23&_nc_ht=scontent.fpio1-1.fna&_nc_gid=X5aeke0rialyXxReJoDKTg&oh=00_AfmmDATfWTCjyrdtshpoSdUkRl7Zd0l9t35onkaTMTUv1g&oe=695A0D4E" class="img-expand" alt="Exteriores">
+                    </div>
+                    <div class="galeria-item">
+                        <img src="https://scontent.fpio1-1.fna.fbcdn.net/v/t39.30808-6/484729329_668158169061428_122052733997256262_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeE6JzfaCo762XgVGxUIiuV1g7CQ3K9x7SaDsJDcr3HtJrMHinlKrj13pcCemcdWH0hiwxnMlh6tEm-WdS3ft5A8&_nc_ohc=l2UZFyrCjxUQ7kNvwGswkPf&_nc_oc=AdknwZVffiRQhLFYuO8Q_D7suDOznO3OS3wb5NssHOHBN-Ixegj0-I-0ub0iwplqFiVO8CxTsygEE7y-6_MmNoyF&_nc_zt=23&_nc_ht=scontent.fpio1-1.fna&_nc_gid=-6bXA7VkPIQE_LE3ZJwIrg&oh=00_Afn-tchvM8Y941WPtdNTqb1j_4pvYLh5939-VAV24u-FQw&oe=6959FBDA" class="img-expand" alt="Aulas Modernas">
+                    </div>
+                    <div class="galeria-item">
+                        <img src="https://scontent.fpio1-1.fna.fbcdn.net/v/t39.30808-6/485135111_668158295728082_1953865963035853280_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHNjbV0newsir8zZ3rQhRrqXw8GVfkid6VfDwZV-SJ3pW0q8SlIGwu19UM2zXzybenJ9Mc01ComOdHSzqssxj-r&_nc_ohc=JQQfRWUqBfIQ7kNvwFnT6fW&_nc_oc=Adkz85SxHEDns6j1XXRopQf1bgEgwICxXbH-Tz_dHP_TAmqwQqRnesRDnuMV8w1kY2XLMeLY_tD0kON-MqfHj9hW&_nc_zt=23&_nc_ht=scontent.fpio1-1.fna&_nc_gid=ud_FbpdyFfJLW3xVxSYoPQ&oh=00_AfkFgaZJyxTMgz3RRqP-uiIngPD30i-BlxzI4OsaYvvjHA&oe=6959FAF2" class="img-expand" alt="Áreas Comunes">
+                    </div>
+                    <div class="galeria-item">
+                        <img src="https://scontent.fpio1-1.fna.fbcdn.net/v/t39.30808-6/485005793_668158012394777_7454171359212827112_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFF1x5chIAuo98NKaobUsFd2mtsx2ApBj7aa2zHYCkGPhoAr8WTwC3-usBYY2RIvMHg6Wvl641KbwtUSbOkuASm&_nc_ohc=jc9maVw0u-sQ7kNvwEUtc43&_nc_oc=AdnQjovp4IacMp6AokK-FTtfidfXOMBqrPNYA3Zn7bq10xQAIHrOSqFO3S53wvegxSO7pHihbCYkPO4lX_vDWJ5W&_nc_zt=23&_nc_ht=scontent.fpio1-1.fna&_nc_gid=7PJjabTjpdFXRIt48GNuug&oh=00_AfmzuUHp4KskR0g0ZuPA01lL0SoKUoiKZnhL-tSQJaX-LA&oe=695A0AD6" class="img-expand" alt="Comedor Universitario">
+                    </div>
+                    <div class="galeria-item">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_1fFNvvsiQ9wZXAoM9KHxf07vKvxGxRBNwg&s" class="img-expand" alt="Sala de Cómputo">
+                    </div>
+                     <div class="galeria-item">
+                        <img src="https://scontent.fpio1-1.fna.fbcdn.net/v/t39.30808-6/485372333_668158319061413_9032907396098192155_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHKteb1koBv4877HjwZwzmdE9c2csRr-eUT1zZyxGv55VyK2cdOgilvWCfNhxozFrst3oB9_VxE1BxWFKNw9pPi&_nc_ohc=Nm0qrY1CbrYQ7kNvwGYCub0&_nc_oc=AdkwLhNBoGmf80XTICFkgTBqEWfVVNsJz40aIkD9nY2iw6hYRJXcoMq-6ZzmZhNZyKr7VstaLuybERgH_wVjeWSN&_nc_zt=23&_nc_ht=scontent.fpio1-1.fna&_nc_gid=h-otEm2N53KhjJLDtOB7_Q&oh=00_AfmB4EA_-1a5YEgtVqwDjfZ-FfN72J1WJWCGsqOaMS6c_A&oe=6959ED83" class="img-expand" alt="sala de profesores">
+                     </div>
+                         <div class="galeria-item">
+                        <img src="https://scontent.fpio1-1.fna.fbcdn.net/v/t39.30808-6/485001631_668158002394778_5246378726841655615_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEQWkzqB7PruxGToGE3tbSM8-CSXI9rUm3z4JJcj2tSbTSAuuwE8ywlhprS2KlRnTqgiSI92PYa2k2TmQvtB-w5&_nc_ohc=EmgjEZXW-HUQ7kNvwEFuXK2&_nc_oc=Adl3vDgNWiBpEKC4LdGcPC8E0tmQTNC_gUMJpr3T8_iSuf23kP8hwLfiDsZ2imDSFmy85A48re4zme6DTZavCkr5&_nc_zt=23&_nc_ht=scontent.fpio1-1.fna&_nc_gid=byX_zc_HNZ4IyAVgLk7Ckw&oh=00_AfnardVoPHoYNbsFh7VNz3aMGHvt0tdWhFmIC2gnamXdvA&oe=6959F552" class="img-expand" alt="estacionamiento">
+                        </div>
+                    <div class="galeria-item">
+                        <img src="https://scontent.fpio1-1.fna.fbcdn.net/v/t39.30808-6/485006154_668158042394774_8711510226430589871_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeE3CXPSK9h4B6I_8ZC48wbDEAvTEGEakW0QC9MQYRqRbc3x-hhZl_dNO-WgLkLeTgJ4BolKMfc4X7llyCltaopw&_nc_ohc=KF5Rk_cwLPEQ7kNvwGjMb9t&_nc_oc=AdlNE31wz-zfPD472t0Fw9cjU8ophQ4R6PypiHrd-7JtuY90gd8z-ph2U53Wkm_df7_K6_ECllZMoAJi5dQfjiv0&_nc_zt=23&_nc_ht=scontent.fpio1-1.fna&_nc_gid=pZ34NmY8cjnitgi7fQWyxA&oh=00_Afk8UQ3PVonMxXaXbZL-DoapJMwvjWxZtbjvO1EEKssprA&oe=695A0091" class="img-expand" alt="campo de recreacion">
+                    </div>
+                        
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER OFICIAL -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Contacto Directo</h4>
+                    <p>📍 Rectorado: Prolog. Ayabaca C-9 Urb. San José - Ica.</p>
+                    <p>📍 Local Central: Calle Bolívar 232 - Ica.</p>
+                    <p>📍 Av. Los Maestros s/n, Ica</p>
+                    <p>📞 (056) 284399</p>
+                    <p>📧 mesadepartes@unica.edu.pe</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces Institucionales</h4>
+                    <a href="https://www.unica.edu.pe/index2.php">Universidad Nacional San Luis Gonzaga</a>
+                    <a href="https://serviciosacademicos.unica.edu.pe/plataforma/">Mesa de Partes Virtual</a>
+                    <a href="https://serviciosacademicos.unica.edu.pe/biblioteca.php">Biblioteca Central</a>
+                    <a href="https://www.unica.edu.pe/transparencia/univ/index.php">Portal de Transparencia</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Pensamiento</h4>
+                    <p style="font-style: italic; opacity: 0.8; margin-top: 10px;">"Es un buen ejercicio ser del todo sincero consigo mismo."</p>
+                    <p style="margin-top: 10px; font-weight: bold;">- Sigmund Freud</p>
+                </div>
+            </div>
+            
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2300.986496994169!2d-75.73249840256106!3d-14.090007358393263!2m3!1f0!2f0!0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9110e36ff01ae3f1%3A0x6b78ea48ffaedc8e!2sFacultad%20de%20Psicologia!5e0!3m2!1ses-419!2spe!4v1767058827461!5m2!1ses-419!2spe" 
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            
+
+            <div class="copyright">
+                © 2025 Facultad de Psicología - UNICA. Todos los derechos reservados.
+                
+                <a href="https://www.facebook.com/profile.php?id=61567099556932" target="_blank" class="icon-facebook">
+    <i class="fab fa-facebook-f"></i>
+</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts de Interacción -->
+    <script>
+        // Lógica mejorada para toggle de detalles laborales
+        function toggleDetalle(element, detalleId) {
+            // Cerrar todos primero
+            document.querySelectorAll('.detalle-content').forEach(d => {
+                if(d.id !== detalleId) d.style.display = 'none';
+            });
+            document.querySelectorAll('.laboral-item').forEach(item => {
+                if(item !== element) item.classList.remove('active-area');
+            });
+
+            // Toggle actual
+            const detalle = document.getElementById(detalleId);
+            const isOpen = detalle.style.display === 'block';
+            
+            if(!isOpen) {
+                detalle.style.display = 'block';
+                element.classList.add('active-area');
+            } else {
+                detalle.style.display = 'none';
+                element.classList.remove('active-area');
+            }
+        }
+
+        // Lógica FAQ
+        const faqQuestions = document.querySelectorAll(".faq-question");
+        faqQuestions.forEach(question => {
+            question.addEventListener("click", () => {
+                const answer = question.nextElementSibling;
+                const isOpen = answer.style.display === "block";
+                
+                // Cerrar otros (efecto acordeón)
+                document.querySelectorAll(".faq-answer").forEach(a => a.style.display = "none");
+                
+                answer.style.display = isOpen ? "none" : "block";
+            });
+        });
+    </script>
+
+    <!-- MODAL PARA IMÁGENES -->
+    <div id="imgModal" class="img-modal">
+      <span class="img-close">&times;</span>
+      <img class="img-modal-content" id="imgModalContent" alt="Vista ampliada">
+    </div>
+
+    <script>
+        const modal = document.getElementById("imgModal");
+        const modalImg = document.getElementById("imgModalContent");
+        const closeBtn = document.querySelector(".img-close");
+
+        document.querySelectorAll(".img-expand").forEach(img => {
+          img.addEventListener("click", () => {
+            modal.style.display = "flex";
+            modalImg.src = img.src;
+          });
+        });
+
+        closeBtn.onclick = () => modal.style.display = "none";
+        modal.onclick = (e) => {
+          if(e.target === modal) modal.style.display = "none";
+        };
+    </script>
+<script>
+const toggle = document.querySelector(".menu-toggle");
+const menu = document.querySelector("nav ul");
+
+toggle.addEventListener("click", () => {
+    menu.classList.toggle("show");
+    toggle.classList.toggle("active");
+});
+</script>
+
+</body>
+</html>
