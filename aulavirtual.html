@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aula Virtual | Facultad de Psicología</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body{
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #081a33, #0f2f5f);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container{
+            background: #ffffff;
+            width: 380px;
+            padding: 40px;
+            border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(0,0,0,.30);
+            text-align: center;
+        }
+
+        .logo-psico{
+            width: 120px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+        }
+
+        h2{
+            margin: 0;
+            color: #081a33;
+        }
+
+        h3{
+            margin: 10px 0 25px;
+            font-size: 15px;
+            color: #555;
+            font-weight: normal;
+        }
+
+        .input-group{
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .input-group label{
+            font-size: 14px;
+            color: #333;
+        }
+
+        .input-group input{
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn{
+            width: 100%;
+            padding: 12px;
+            background: #081a33;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .btn:hover{
+            background: #0f2f5f;
+        }
+
+        .footer-text{
+            margin-top: 18px;
+            font-size: 13px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+
+        <img 
+            src="https://www.unica.edu.pe/psicologia/info/psicologia_logo.png" 
+            alt="Facultad de Psicología"
+            class="logo-psico"
+        >
+
+        <h2>Aula Virtual</h2>
+        <h3>Facultad de Psicología</h3>
+
+        <form onsubmit="return ingresar();">
+            <div class="input-group">
+                <label>Usuario institucional</label>
+                <input type="text" required>
+            </div>
+
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input type="password" required>
+            </div>
+
+            <button class="btn" type="submit">Ingresar</button>
+        </form>
+
+        <div class="footer-text">
+            Universidad Nacional “San Luis Gonzaga”
+        </div>
+
+    </div>
+
+    <script>
+        function ingresar(){
+            window.location.href = "facultaddepsicologia.html";
+            return false;
+        }
+    </script>
+
+</body>
+</html>
