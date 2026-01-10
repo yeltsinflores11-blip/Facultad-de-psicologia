@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia | Facultad de Psicología</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1e40af;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: #334155; line-height: 1.6; overflow-x: hidden; }
+
+        /* --- NAVEGACIÓN (IDÉNTICA AL INDEX) --- */
+        nav {
+            position: fixed; width: 100%; padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px); border-bottom: 1px solid #f1f5f9;
+        }
+        .logo { font-family: 'Lexend'; font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .logo span { color: var(--accent); }
+        
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { 
+            text-decoration: none; color: var(--dark); font-weight: 500; font-size: 0.95rem; 
+            transition: all 0.3s ease; display: inline-block;
+        }
+        .nav-links a:hover { color: var(--primary) !important; transform: scale(1.15); }
+        .nav-links a.active { color: var(--primary); font-weight: 700; }
+
+        /* --- HEADER HISTORIA --- */
+        .history-hero {
+            height: 50vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), 
+                        url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center; padding-top: 80px;
+        }
+        .history-hero h1 { font-family: 'Lexend'; font-size: 3.5rem; }
+
+        /* --- SECCIONES DE HISTORIA (STORYTELLING) --- */
+        .era-section {
+            display: flex; align-items: center; padding: 100px 10%; min-height: 70vh; gap: 60px;
+        }
+        /* Alterna el orden: Imagen derecha / Imagen izquierda */
+        .era-section:nth-child(even) { flex-direction: row-reverse; background-color: var(--bg-light); }
+
+        .era-content { flex: 1; position: relative; }
+        .era-year { 
+            font-family: 'Lexend'; font-size: 6rem; color: var(--primary); opacity: 0.1; 
+            position: absolute; top: -50px; left: -10px; z-index: -1;
+        }
+        .era-content h2 { font-family: 'Lexend'; font-size: 2.5rem; margin-bottom: 20px; color: var(--primary); }
+        .era-content p { font-size: 1.1rem; line-height: 1.8; color: #475569; }
+
+        .era-image { 
+            flex: 1; border-radius: 30px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .era-image img { width: 100%; height: 450px; object-fit: cover; transition: 0.5s; }
+        .era-image:hover img { transform: scale(1.05); }
+
+        /* --- FOOTER UNIFICADO (IGUAL A LAS OTRAS PÁGINAS) --- */
+        footer { background-color: #0f172a; color: #f8fafc; padding: 60px 10% 20px; margin-top: 50px; }
+        .footer-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-section h4 { font-family: 'Lexend'; font-size: 1.1rem; margin-bottom: 20px; color: var(--accent); text-transform: uppercase; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: #cbd5e1; text-decoration: none; transition: 0.3s; font-size: 0.9rem; }
+        .footer-links a:hover { color: #ffffff; padding-left: 5px; }
+        .footer-buttons { display: flex; flex-direction: column; gap: 15px; }
+        .btn-footer { padding: 10px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; }
+        .btn-transparencia { background: transparent; border: 1px solid #ffffff; color: white; }
+        .btn-reclamaciones { background: #ffffff; color: #0f172a; }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px; text-align: center; font-size: 0.8rem; color: #94a3b8; }
+
+        @media (max-width: 768px) {
+            .era-section { flex-direction: column !important; padding: 60px 5%; text-align: center; }
+            .era-year { left: 50%; transform: translateX(-50%); }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">FACU<span>PSI</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="historia.html" class="active">Historia</a></li>
+            <li><a href="carrera.html">Carrera</a></li>
+            <li><a href="academico.html">Académico</a></li>
+            <li><a href="docentes.html">Cuerpo Académico</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <header class="history-hero">
+        <h1>Nuestra Historia</h1>
+        <p>Trayectoria y compromiso con la salud mental.</p>
+    </header>
+
+    <main>
+        <section class="era-section">
+            <div class="era-content">
+                <span class="era-year">1980</span>
+                <h2>Los Inicios</h2>
+                <p>La Facultad de Psicología nace con la misión de entender el comportamiento humano en la región Ica. Sus fundadores sentaron las bases de lo que hoy es una institución líder en el sur del Perú.</p>
+            </div>
+            <div class="era-image">
+                <img src="https://images.unsplash.com/photo-152305085306e-8c44c212239f?auto=format&fit=crop&w=800" alt="Inicios">
+            </div>
+        </section>
+
+        <section class="era-section">
+            <div class="era-content">
+                <span class="era-year">2005</span>
+                <h2>Consolidación Científica</h2>
+                <p>Durante esta etapa, se fortalecieron los laboratorios y se inició un proceso de modernización académica, incorporando nuevas corrientes psicoterapéuticas y enfoques de investigación experimental.</p>
+            </div>
+            <div class="era-image">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800" alt="Ciencia">
+            </div>
+        </section>
+
+        <section class="era-section">
+            <div class="era-content">
+                <span class="era-year">2026</span>
+                <h2>Mirando al Futuro</h2>
+                <p>Con la implementación de nuevas tecnologías y convenios internacionales, la facultad se proyecta hacia la excelencia académica global, manteniendo siempre su compromiso con la comunidad.</p>
+            </div>
+            <div class="era-image">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800" alt="Actualidad">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Facultad de Psicología</h4>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">UNICA - Formando profesionales con bases científicas y sentido humano.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navegación</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="carrera.html">Malla Curricular</a></li>
+                    <li><a href="contacto.html">Mapa del Sitio</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Gestión Pública</h4>
+                <div class="footer-buttons">
+                    <a href="https://www.transparencia.gob.pe/" target="_blank" class="btn-footer btn-transparencia">
+                        <i class="fa-solid fa-eye"></i> Transparencia
+                    </a>
+                    <a href="#" class="btn-footer btn-reclamaciones">
+                        <i class="fa-solid fa-book"></i> Libro de Reclamaciones
+                    </a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div style="display: flex; gap: 15px;">
+                    <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Facultad de Psicología - UNICA. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
