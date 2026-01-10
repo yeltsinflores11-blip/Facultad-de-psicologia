@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Facultad de Psicología</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1e40af;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --bg-page: #ffffff;
+            --bg-alt: #f8fafc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-page); color: var(--dark); line-height: 1.6; }
+
+       /* --- NAVEGACIÓN UNIFICADA --- */
+nav {
+    position: fixed; 
+    width: 100%; 
+    padding: 15px 5%;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    z-index: 1000; 
+    background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.logo { 
+    font-family: 'Lexend'; 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    color: var(--primary); 
+    text-decoration: none; 
+}
+
+.nav-links { 
+    display: flex; 
+    list-style: none; 
+    gap: 30px; 
+    align-items: center;
+}
+
+.nav-links a { 
+    text-decoration: none; 
+    color: var(--dark); 
+    font-weight: 500; 
+    font-size: 0.95rem; /* Tamaño base */
+    transition: all 0.3s ease; /* Suaviza el cambio de tamaño y color */
+    display: inline-block;
+}
+
+/* EFECTO HOVER PARA TODOS LOS LINKS */
+.nav-links a:hover { 
+    color: var(--primary); 
+    transform: scale(1.1); /* Hace la letra un poco más grande al pasar el mouse */
+}
+
+/* ESTILO PARA LA PÁGINA DONDE TE ENCUENTRAS (ACTIVE) */
+.nav-links a.active { 
+    color: var(--primary); 
+    font-weight: 700;
+    border-bottom: 2px solid var(--accent);
+}
+
+        /* --- HEADER --- */
+        .header-contacto {
+            padding: 160px 10% 60px;
+            background: linear-gradient(to right, #f8fafc, #ffffff);
+            text-align: center;
+        }
+        .header-contacto h1 { font-family: 'Lexend'; font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
+
+        /* --- CONTENIDO DE CONTACTO --- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            padding: 60px 10%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Información de contacto */
+        .contact-info h2 { font-family: 'Lexend'; margin-bottom: 30px; font-size: 1.8rem; }
+        .info-item { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 30px; }
+        .info-item i { 
+            background: #eff6ff; color: var(--primary); 
+            padding: 15px; border-radius: 12px; font-size: 1.2rem;
+        }
+        .info-text h3 { font-size: 1.1rem; margin-bottom: 5px; }
+        .info-text p { color: #64748b; font-size: 0.95rem; }
+
+        /* Formulario */
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            border: 1px solid #f1f5f9;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px 16px; border-radius: 10px;
+            border: 1px solid #e2e8f0; font-family: inherit; font-size: 1rem;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+        }
+        .btn-send {
+            width: 100%; background: var(--primary); color: white; border: none;
+            padding: 15px; border-radius: 10px; font-weight: 700; cursor: pointer;
+            transition: 0.3s; font-size: 1rem;
+        }
+        .btn-send:hover { background: #1e3a8a; transform: translateY(-2px); }
+
+        /* --- MAPA --- */
+        .map-section { padding: 0 10% 100px; }
+        .map-wrapper {
+            height: 450px; border-radius: 24px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* --- FOOTER MODERNO Y UNIFICADO --- */
+footer {
+    background-color: #0f172a; /* Azul muy oscuro (profesional) */
+    color: #f8fafc;
+    padding: 60px 10% 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section h4 {
+    font-family: 'Lexend';
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #10b981; /* Color de acento verde */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+    padding-left: 5px;
+}
+
+/* Estilo para los botones de Transparencia y Reclamaciones */
+.footer-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-footer {
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.btn-transparencia {
+    background: transparent;
+    border: 1px solid #ffffff;
+    color: white;
+}
+
+.btn-transparencia:hover {
+    background: white;
+    color: #0f172a;
+}
+
+.btn-reclamaciones {
+    background: #ffffff;
+    color: #0f172a;
+}
+
+.btn-reclamaciones img {
+    height: 18px; /* Para el logo del libro de reclamaciones */
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+        @media (max-width: 992px) {
+            .contact-container { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">FACU<span>PSI</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="historia.html">Historia</a></li>
+            <li><a href="carrera.html">Carrera</a></li>
+            <li><a href="academico.html">Académico</a></li>
+            <li><a href="docentes.html">Cuerpo Académico</a></li>
+            <li><a href="contacto.html" style="color: var(--primary); font-weight: 700;">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <header class="header-contacto">
+        <h1>Ponte en Contacto</h1>
+        <p>Estamos aquí para resolver tus dudas y orientarte en tu camino profesional.</p>
+    </header>
+
+    <section class="contact-container">
+        <div class="contact-info">
+            <h2>Información de Enlace</h2>
+            
+            <div class="info-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <div class="info-text">
+                    <h3>Ubicación</h3>
+                    <p>W759+Q72, Ica 11004, Perú<br>Ciudad Universitaria UNICA</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <i class="fa-solid fa-envelope"></i>
+                <div class="info-text">
+                    <h3>Correo Electrónico</h3>
+                    <p>informes.psicologia@unica.edu.pe</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <i class="fa-solid fa-phone"></i>
+                <div class="info-text">
+                    <h3>Teléfono y WhatsApp</h3>
+                    <p>+51 987 654 321<br>Lunes a Viernes: 8:00 AM - 4:00 PM</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <i class="fa-solid fa-share-nodes"></i>
+                <div class="info-text">
+                    <h3>Redes Sociales</h3>
+                    <p>Siguenos en Facebook: <a href="https://www.facebook.com/share/1WoNyuJtyp/" target="_blank">Facultad de Psicología Oficial</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form action="#">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" placeholder="juan@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label>Asunto</label>
+                    <input type="text" placeholder="¿En qué podemos ayudarte?">
+                </div>
+                <div class="form-group">
+                    <label>Mensaje</label>
+                    <textarea rows="5" placeholder="Escribe tu consulta detalladamente..."></textarea>
+                </div>
+                <button type="submit" class="btn-send">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="map-section">
+        <div class="map-wrapper">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3870.3347043329244!2d-75.7483863240212!3d-14.057396783100366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9110e36ff01ae3f1%3A0x6b78ea48ffaeec8e!2sFacultad%20de%20Psicologia!5e0!3m2!1ses!2spe!4v1704670000000!5m2!1ses!2spe" 
+                width="100%" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Facultad de Psicología</h4>
+            <p style="font-size: 0.9rem; color: #cbd5e1;">Universidad Nacional San Luis Gonzaga de Ica. Formando profesionales líderes en salud mental desde la excelencia académica.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Navegación</h4>
+            <ul class="footer-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="carrera.html">Malla Curricular</a></li>
+                <li><a href="docentes.html">Cuerpo Docente</a></li>
+                <li><a href="contacto.html">Mapa del Sitio</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Gestión Pública</h4>
+            <div class="footer-buttons">
+                <a href="https://www.transparencia.gob.pe/" target="_blank" class="btn-footer btn-transparencia">
+                    <i class="fa-solid fa-eye"></i> Portal de Transparencia
+                </a>
+                <a href="#" class="btn-footer btn-reclamaciones">
+                    <i class="fa-solid fa-book"></i> Libro de Reclamaciones
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4>Síguenos</h4>
+            <div style="display: flex; gap: 15px;">
+                <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" style="font-size: 1.5rem; color: #cbd5e1;"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Facultad de Psicología - UNICA. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+</body>
+</html>
