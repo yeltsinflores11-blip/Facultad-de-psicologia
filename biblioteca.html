@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca de Psicología - Gestión Total</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3B82F6; --secondary: #6366F1; --success: #10B981;
+            --danger: #EF4444; --warning: #F59E0B; --bg: #F1F5F9;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 40px; margin: 0; opacity: 0; transition: opacity 0.5s; }
+        body.loaded { opacity: 1; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        /* Panel Docente Superior */
+        .admin-controls { display: none; background: white; padding: 20px; border-radius: 15px; margin-bottom: 25px; border-left: 5px solid var(--primary); box-shadow: 0 4px 15px rgba(0,0,0,0.05); align-items: center; justify-content: space-between; }
+        
+        /* Chips Filtros */
+        .filters { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding: 5px; }
+        .filter-chip { background: white; padding: 10px 22px; border-radius: 25px; font-size: 0.9rem; color: #64748B; cursor: pointer; border: 1px solid #E2E8F0; transition: 0.3s; font-weight: 500; }
+        .filter-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Grid de Libros */
+        .grid-biblioteca { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }
+        .book-card { background: white; border-radius: 18px; overflow: hidden; display: flex; box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: 0.4s; border: 1px solid #F1F5F9; }
+        .book-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        
+        .book-cover { width: 110px; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; font-size: 2.5rem; position: relative; }
+        .read-badge { position: absolute; top: 5px; right: 5px; background: var(--success); color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; display: none; align-items: center; justify-content: center; border: 2px solid white; }
+        
+        .book-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .book-title { font-size: 1.1rem; color: #1E293B; margin: 0; font-weight: 700; }
+        
+        /* Botones de Acción */
+        .actions { display: flex; gap: 8px; border-top: 1px solid #F1F5F9; padding-top: 15px; margin-top: auto; flex-wrap: wrap; }
+        .btn-act { border: none; background: #F8FAFC; color: #475569; padding: 8px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 5px; text-decoration: none; }
+        .btn-pdf { color: var(--danger); background: #FEF2F2; }
+        .btn-read-check.active { background: #D1FAE5; color: var(--success); }
+
+        /* Ventanas Modales */
+        .modal { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 450px; max-height: 80vh; overflow-y: auto; animation: pop 0.3s ease; }
+        
+        /* Lista en Papelera */
+        .trash-list { list-style: none; padding: 0; margin-top: 15px; }
+        .trash-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #F1F5F9; }
+        .trash-item:last-child { border: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div>
+                <a href="menu.html" style="text-decoration:none; color:var(--primary); font-size:0.9rem; font-weight:bold;"><i class="fas fa-chevron-left"></i> VOLVER AL CAMPUS</a>
+                <h1 style="color:#1E293B; margin:10px 0 0 0; font-size: 2.2rem;">Biblioteca Digital</h1>
+            </div>
+            <div id="trash-bin-container" style="display:none;">
+                <button onclick="openTrash()" class="btn-act" style="padding:12px 20px; background:white; border: 1px solid #E2E8F0; color: var(--danger);">
+                    <i class="fas fa-trash"></i> Gestionar Papelera (<span id="trash-count">0</span>)
+                </button>
+            </div>
+        </div>
+
+        <div id="adminPanel" class="admin-controls">
+            <div>
+                <span style="background:var(--primary); color:white; padding:3px 8px; border-radius:5px; font-size:0.7rem; font-weight:bold;">MODO DOCENTE</span>
+                <p style="margin:5px 0 0 0; color:#475569;">Repositorio Académico y Gestión de Archivos</p>
+            </div>
+            <button onclick="openModal()" style="background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 12px; cursor: pointer; font-weight: bold;">
+                <i class="fas fa-plus"></i> Añadir Libro / PDF
+            </button>
+        </div>
+
+        <div class="filters">
+            <div class="filter-chip active" onclick="setFilter('all', this)">Todos</div>
+            <div class="filter-chip" onclick="setFilter('Psicología Clínica', this)">Psicología Clínica</div>
+            <div class="filter-chip" onclick="setFilter('Neurociencias', this)">Neurociencias</div>
+            <div class="filter-chip" onclick="setFilter('Psicopedagogía', this)">Psicopedagogía</div>
+            <div class="filter-chip" onclick="setFilter('Social', this)">Social</div>
+            <div class="filter-chip" onclick="setFilter('Terapia Cognitiva', this)">Terapia Cognitiva</div>
+        </div>
+
+        <div class="grid-biblioteca" id="bookGrid"></div>
+    </div>
+
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-top:0;">Nuevo Recurso Educativo</h2>
+            <input type="text" id="newTitle" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;" placeholder="Título del Libro">
+            <input type="text" id="newAuthor" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;" placeholder="Autor">
+            <select id="newCat" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;">
+                <option>Psicología Clínica</option>
+                <option>Neurociencias</option>
+                <option>Psicopedagogía</option>
+                <option>Social</option>
+                <option>Terapia Cognitiva</option>
+            </select>
+            <div style="background:#F8FAFC; border:2px dashed #CBD5E1; padding:20px; text-align:center; border-radius:10px; margin-top:10px;">
+                <i class="fas fa-cloud-upload-alt fa-2x" style="color:var(--primary);"></i>
+                <p style="font-size:0.8rem; color:#64748B;">Vincular archivo PDF (Decorativo)</p>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button onclick="saveBook()" style="flex:1; background: var(--success); color:white; border:none; padding:12px; border-radius:10px; cursor:pointer; font-weight:bold;">Guardar</button>
+                <button onclick="closeModal()" style="flex:1; background: #eee; border:none; padding:12px; border-radius:10px; cursor:pointer;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="trashModal" class="modal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 style="margin:0;"><i class="fas fa-trash-alt"></i> Libros Borrados</h2>
+                <button onclick="closeTrash()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <p style="color:#64748B; font-size:0.85rem;">Aquí puedes restaurar los libros que eliminaste.</p>
+            <div id="trashList" class="trash-list">
+                </div>
+            <button onclick="emptyTrashPermanently()" style="width:100%; margin-top:20px; color:var(--danger); background:none; border:1px solid var(--danger); padding:10px; border-radius:8px; cursor:pointer; font-weight:600;">Vaciar papelera permanentemente</button>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content" style="text-align:center;">
+            <i class="fas fa-question-circle" style="font-size:3.5rem; color:var(--warning); margin-bottom:15px;"></i>
+            <h3>¿Enviar a la papelera?</h3>
+            <p>El libro "<b><span id="delTitle"></span></b>" se guardará en la lista de borrados.</p>
+            <div style="display:flex; gap:10px; margin-top:25px;">
+                <button id="btnConfirmDel" style="flex:1; background: var(--danger); color:white; border:none; padding:12px; border-radius:10px; cursor:pointer; font-weight:bold;">SÍ, MOVER</button>
+                <button onclick="closeConfirm()" style="flex:1; background: #eee; border:none; padding:12px; border-radius:10px; cursor:pointer;">VOLVER</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const initialBooks = [
+            { id: 1, title: "Mente y Cerebro", author: "Dr. Facundo Manes", cat: "Neurociencias", color: "#6366F1", icon: "fa-brain" },
+            { id: 2, title: "Psicopatología Moderna", author: "James Morrison", cat: "Psicología Clínica", color: "#EC4899", icon: "fa-notes-medical" },
+            { id: 3, title: "Control de la Ansiedad", author: "Aaron Beck", cat: "Terapia Cognitiva", color: "#F59E0B", icon: "fa-lightbulb" },
+            { id: 4, title: "Estrategias de Aprendizaje", author: "Lev Vygotsky", cat: "Psicopedagogía", color: "#10B981", icon: "fa-graduation-cap" },
+            { id: 5, title: "Psicología de las Masas", author: "Gustave Le Bon", cat: "Social", color: "#8B5CF6", icon: "fa-users" }
+        ];
+
+        let books = JSON.parse(localStorage.getItem('libros_v4')) || [...initialBooks];
+        let trash = JSON.parse(localStorage.getItem('papelera_v4')) || [];
+        let readBooks = JSON.parse(localStorage.getItem('leidos_v4')) || [];
+        let currentFilter = 'all';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.classList.add('loaded');
+            const role = localStorage.getItem('userRole');
+            if(role === 'teacher') {
+                document.getElementById('adminPanel').style.display = 'flex';
+                document.getElementById('trash-bin-container').style.display = 'block';
+            }
+            renderBooks();
+            updateTrashUI();
+        });
+
+        function renderBooks() {
+            const grid = document.getElementById('bookGrid');
+            const role = localStorage.getItem('userRole');
+            grid.innerHTML = '';
+
+            books.filter(b => currentFilter === 'all' || b.cat === currentFilter).forEach(book => {
+                const isRead = readBooks.includes(book.id);
+                const card = document.createElement('div');
+                card.className = 'book-card';
+                card.innerHTML = `
+                    <div class="book-cover" style="background: ${book.color || '#3B82F6'}">
+                        <i class="fas ${book.icon || 'fa-book'}"></i>
+                        <div class="read-badge" style="display: ${isRead ? 'flex' : 'none'}"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="book-info">
+                        <span style="font-size:0.65rem; font-weight:800; color:var(--primary);">${book.cat.toUpperCase()}</span>
+                        <h3 class="book-title">${book.title}</h3>
+                        <p style="font-size:0.8rem; color:#64748B; margin:5px 0;">${book.author}</p>
+                        <div class="actions">
+                            <a href="#" class="btn-act btn-pdf"><i class="fas fa-file-pdf"></i> Ver PDF</a>
+                            <button class="btn-act btn-read-check ${isRead ? 'active' : ''}" onclick="toggleRead(${book.id})">
+                                <i class="fas fa-check-circle"></i> ${isRead ? 'Leído' : 'Texto leído'}
+                            </button>
+                            ${role === 'teacher' ? `<button class="btn-act" onclick="askDelete(${book.id}, '${book.title}')" style="color:var(--danger)"><i class="fas fa-trash-alt"></i></button>` : ''}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            localStorage.setItem('libros_v4', JSON.stringify(books));
+            localStorage.setItem('leidos_v4', JSON.stringify(readBooks));
+        }
+
+        function setFilter(cat, el) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            renderBooks();
+        }
+
+        function toggleRead(id) {
+            readBooks = readBooks.includes(id) ? readBooks.filter(i => i !== id) : [...readBooks, id];
+            renderBooks();
+        }
+
+        // --- GESTIÓN DE PAPELERA ---
+        let idToDelete = null;
+        function askDelete(id, title) {
+            idToDelete = id;
+            document.getElementById('delTitle').innerText = title;
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+
+        document.getElementById('btnConfirmDel').onclick = () => {
+            const idx = books.findIndex(b => b.id === idToDelete);
+            const [item] = books.splice(idx, 1);
+            trash.push(item);
+            closeConfirm();
+            renderBooks();
+            updateTrashUI();
+        };
+
+        function updateTrashUI() {
+            document.getElementById('trash-count').innerText = trash.length;
+            const list = document.getElementById('trashList');
+            list.innerHTML = trash.length === 0 ? '<p style="text-align:center; color:#999; padding:20px;">Papelera vacía</p>' : '';
+            
+            trash.forEach((book, idx) => {
+                const item = document.createElement('div');
+                item.className = 'trash-item';
+                item.innerHTML = `
+                    <div>
+                        <strong style="font-size:0.9rem;">${book.title}</strong><br>
+                        <small style="color:#64748B;">${book.cat}</small>
+                    </div>
+                    <button onclick="restoreBook(${idx})" style="background:var(--success); color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">Restaurar</button>
+                `;
+                list.appendChild(item);
+            });
+            localStorage.setItem('papelera_v4', JSON.stringify(trash));
+        }
+
+        function restoreBook(idx) {
+            const [item] = trash.splice(idx, 1);
+            books.push(item);
+            renderBooks();
+            updateTrashUI();
+        }
+
+        function emptyTrashPermanently() {
+            if(confirm("¿Estás seguro? Estos libros no se podrán recuperar jamás.")) {
+                trash = [];
+                updateTrashUI();
+                closeTrash();
+            }
+        }
+
+        // Modales
+        function openModal() { document.getElementById('addModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('addModal').style.display = 'none'; }
+        function openTrash() { document.getElementById('trashModal').style.display = 'flex'; }
+        function closeTrash() { document.getElementById('trashModal').style.display = 'none'; }
+        function closeConfirm() { document.getElementById('confirmModal').style.display = 'none'; }
+
+        function saveBook() {
+            const t = document.getElementById('newTitle').value;
+            const a = document.getElementById('newAuthor').value;
+            const c = document.getElementById('newCat').value;
+            if(t && a) {
+                books.unshift({ id: Date.now(), title: t, author: a, cat: c, color: '#3B82F6', icon: 'fa-book' });
+                renderBooks(); closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
