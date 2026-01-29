@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Universal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --blue: #3B82F6; }
+        body { height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1555449588-46726487e97d?q=80&w=1920'); background-size: cover; font-family: 'Segoe UI', sans-serif; margin: 0; opacity: 0; transition: opacity 0.5s ease; }
+        body.loaded { opacity: 1; }
+        .login-card { background: white; padding: 40px; border-radius: 15px; width: 100%; max-width: 400px; text-align: center; }
+        .logo { width: 80px; height: 80px; background: #EFF6FF; border: 3px solid var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: var(--blue); margin: 0 auto 20px; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold; }
+        .hint { font-size: 0.8rem; color: #888; margin-top: 15px; text-align: left; background: #f9f9f9; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="logo"><i class="fas fa-brain"></i></div>
+        <h2 style="color:#333; margin-bottom:5px;">Facultad de Psicología</h2>
+        <p style="color:#666; font-size:0.9rem; margin-bottom:20px;">Plataforma Virtual</p>
+        
+        <form id="loginForm">
+            <input type="text" id="userInput" placeholder="Usuario o Código (Ej: 202401)" required>
+            <input type="password" placeholder="Contraseña (Cualquiera)" required>
+            <button type="submit">Ingresar</button>
+        </form>
+
+        <div class="hint">
+            <strong>Credenciales:</strong><br>
+            • Docente: <b>profesor</b><br>
+            • Estudiantes: <b>202401</b> al <b>202420</b>
+        </div>
+    </div>
+
+    <script>
+        // LISTA DE RESPALDO (Por si no hay nada guardado)
+        const defaultStudents = [
+            { id: 1, code: "202401", name: "Chavez Ayala, Kaysin" },
+            { id: 2, code: "202402", name: "Alvarez, Maria" },
+            { id: 3, code: "202403", name: "Benitez, Jorge" },
+            { id: 4, code: "202404", name: "Castillo, Pedro" },
+            { id: 5, code: "202405", name: "Diaz, Ana" },
+            { id: 6, code: "202406", name: "Espinoza, Luis" },
+            { id: 7, code: "202407", name: "Fernandez, Sofia" },
+            { id: 8, code: "202408", name: "Garcia, Miguel" },
+            { id: 9, code: "202409", name: "Hernandez, Jose" },
+            { id: 10, code: "202410", name: "Iglesias, Carmen" },
+            { id: 11, code: "202411", name: "Jimenez, Raul" },
+            { id: 12, code: "202412", name: "Lopez, Elena" },
+            { id: 13, code: "202413", name: "Martinez, Carlos" },
+            { id: 14, code: "202414", name: "Nuñez, Patricia" },
+            { id: 15, code: "202415", name: "Ortega, David" },
+            { id: 16, code: "202416", name: "Perez, Juan" },
+            { id: 17, code: "202417", name: "Quispe, Rosa" },
+            { id: 18, code: "202418", name: "Ramirez, Fernando" },
+            { id: 19, code: "202419", name: "Sanchez, Lucía" },
+            { id: 20, code: "202420", name: "Torres, Manuel" }
+        ];
+
+        // CARGAR BASE DE DATOS COMPARTIDA
+        function getStudentDB() {
+            const stored = localStorage.getItem('global_students_db_v2');
+            return stored ? JSON.parse(stored) : defaultStudents;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => document.body.classList.add('loaded'));
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('userInput').value.trim().toLowerCase();
+            
+            // 1. PROFESOR
+            if (input.includes('profe') || input.includes('docente')) {
+                localStorage.setItem('userRole', 'teacher');
+                localStorage.setItem('userName', 'Dr. Juan Pérez');
+                localStorage.setItem('userId', 'teacher'); 
+                goMenu();
+                return;
+            }
+
+            // 2. ALUMNO (BUSCAR EN DB ACTUALIZADA)
+            const currentDB = getStudentDB();
+            const studentMatch = currentDB.find(s => s.code === input);
+            
+            if (studentMatch) {
+                localStorage.setItem('userRole', 'student');
+                localStorage.setItem('userName', studentMatch.name); // ¡Carga el nombre editado!
+                localStorage.setItem('userId', studentMatch.id);
+                goMenu();
+            } else {
+                alert("Usuario no encontrado.");
+            }
+        });
+
+        function goMenu() {
+            document.body.style.opacity = '0';
+            setTimeout(() => window.location.href = 'menu.html', 500);
+        }
+    </script>
+</body>
+</html>
