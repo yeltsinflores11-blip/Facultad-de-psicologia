@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal - Campus Virtual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #F8FAFC; padding: 40px; margin: 0; opacity: 0; transition: opacity 0.5s; }
+        body.loaded { opacity: 1; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 2px solid #E2E8F0; padding-bottom: 20px; }
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .user-avatar { width: 45px; height: 45px; background: #3B82F6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto; }
+        
+        .card { background: white; padding: 40px 20px; border-radius: 20px; text-align: center; text-decoration: none; color: #334155; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; align-items: center; border: 1px solid #F1F5F9; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-bottom: 4px solid #3B82F6; }
+        
+        .card i { font-size: 3rem; color: #3B82F6; margin-bottom: 20px; transition: 0.3s; }
+        .card:hover i { transform: scale(1.1); }
+        .card span { font-weight: 600; font-size: 1.1rem; }
+        .card small { color: #64748B; margin-top: 8px; font-size: 0.85rem; }
+
+        .btn-logout { background: #fee2e2; color: #ef4444; padding: 10px 20px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .btn-logout:hover { background: #ef4444; color: white; }
+
+        /* Etiqueta de Rol */
+        .role-badge { font-size: 0.7rem; padding: 4px 8px; border-radius: 6px; text-transform: uppercase; margin-left: 10px; vertical-align: middle; }
+        .role-teacher { background: #F59E0B; color: white; }
+        .role-student { background: #3B82F6; color: white; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="user-info">
+            <div class="user-avatar" id="avatar">?</div>
+            <div>
+                <h1 style="color:#1E293B; margin:0; font-size: 1.5rem;" id="welcome-msg">Cargando...</h1>
+                <span id="role-display"></span>
+            </div>
+        </div>
+        <a href="aula-virtual.html" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Salir</a>
+    </div>
+
+    <div class="grid" id="menu-grid">
+        <a href="cursos.html" class="card">
+            <i class="fas fa-laptop-code"></i>
+            <span>Aula Virtual</span>
+            <small id="aula-desc">Mis cursos y tareas</small>
+        </a>
+
+        <a href="biblioteca.html" class="card" id="btn-biblioteca">
+            <i class="fas fa-book"></i>
+            <span>Biblioteca</span>
+            <small id="biblio-desc">Recursos digitales</small>
+        </a>
+
+        <a href="tests.html" class="card" id="btn-tests">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Test Psicológicos</span>
+            <small id="tests-desc">Evaluaciones disponibles</small>
+        </a>
+
+        <a href="matricula.html" class="card" id="btn-matricula">
+            <i class="fas fa-id-card"></i>
+            <span>Matrícula</span>
+            <small>Registro académico</small>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.classList.add('loaded');
+
+            // 1. Obtener datos del usuario
+            const role = localStorage.getItem('userRole'); // 'teacher' o 'student'
+            const userName = localStorage.getItem('userName') || 'Usuario';
+            
+            // 2. Personalizar Saludo
+            document.getElementById('welcome-msg').innerText = `Hola, ${userName}`;
+            document.getElementById('avatar').innerText = userName.charAt(0);
+
+            // 3. Lógica de Profesor vs Alumno
+            const roleDisplay = document.getElementById('role-display');
+            
+            if (role === 'teacher') {
+                // Ajustes para PROFESOR
+                roleDisplay.innerHTML = '<span class="role-badge role-teacher">Docente</span>';
+                
+                // Cambiar Biblioteca
+                document.getElementById('biblio-desc').innerText = "Gestionar contenidos";
+                document.getElementById('btn-biblioteca').querySelector('span').innerText = "Editor de Biblioteca";
+                
+                // Cambiar Tests
+                document.getElementById('tests-desc').innerText = "Calificar resultados";
+                document.getElementById('btn-tests').querySelector('span').innerText = "Panel de Resultados";
+                document.getElementById('btn-tests').querySelector('i').className = "fas fa-chart-bar";
+                
+                // Eliminar Matrícula
+                const btnMatricula = document.getElementById('btn-matricula');
+                if(btnMatricula) btnMatricula.remove();
+
+                // Cambiar Aula Virtual
+                document.getElementById('aula-desc').innerText = "Gestión de clases";
+
+            } else {
+                // Ajustes para ALUMNO
+                roleDisplay.innerHTML = '<span class="role-badge role-student">Estudiante</span>';
+            }
+
+            // 4. Efecto de salida suave en los enlaces
+            document.querySelectorAll('.card').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.href;
+                    document.body.style.opacity = '0';
+                    setTimeout(() => window.location.href = target, 400);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
