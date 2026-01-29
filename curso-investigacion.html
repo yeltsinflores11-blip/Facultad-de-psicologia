@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Curso - Psicología</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --blue-primary: #3B82F6;
+            --blue-light: #EFF6FF;
+            --text-dark: #1E293B;
+            --gray-border: #E2E8F0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #F8FAFC; color: var(--text-dark); height: 100vh; display: flex; flex-direction: column; }
+
+        /* HEADER SIMPLE */
+        header {
+            background: white; padding: 15px 30px; border-bottom: 1px solid var(--gray-border);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .btn-back {
+            text-decoration: none; color: var(--text-dark); font-weight: 600; display: flex; align-items: center; gap: 8px;
+        }
+        .btn-back:hover { color: var(--blue-primary); }
+
+        /* CONTENEDOR PRINCIPAL: GRID */
+        .course-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 280px 1fr; /* Barra lateral izquierda | Contenido derecho */
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            overflow: hidden; /* Para que el scroll sea interno */
+        }
+
+        /* BARRA LATERAL (MENU DEL CURSO) */
+        .sidebar {
+            background: white;
+            border-right: 1px solid var(--gray-border);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .course-header { margin-bottom: 30px; }
+        .course-header h2 { font-size: 1.2rem; color: var(--blue-primary); margin-bottom: 5px; }
+        .course-header p { font-size: 0.85rem; color: #64748B; }
+
+        /* Botones del menú lateral */
+        .tab-btn {
+            background: none; border: none;
+            padding: 15px; text-align: left;
+            border-radius: 8px; cursor: pointer;
+            font-size: 1rem; color: #64748B; font-weight: 500;
+            display: flex; align-items: center; gap: 15px;
+            transition: 0.3s;
+        }
+        .tab-btn i { width: 20px; text-align: center; }
+        
+        /* Estado Activo (Botón seleccionado) */
+        .tab-btn.active {
+            background-color: var(--blue-light);
+            color: var(--blue-primary);
+            font-weight: 700;
+        }
+        .tab-btn:hover:not(.active) { background-color: #f1f5f9; }
+
+        /* ÁREA DE CONTENIDO (DERECHA) */
+        .content-area {
+            padding: 40px;
+            overflow-y: auto; /* Scroll solo en el contenido */
+        }
+
+        /* Ocultar todas las secciones por defecto */
+        .section-content { display: none; animation: fadeIn 0.4s; }
+        /* Mostrar la activa */
+        .section-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h3.section-title { font-size: 1.5rem; margin-bottom: 25px; border-bottom: 2px solid var(--gray-border); padding-bottom: 10px; }
+
+        /* --- ESTILOS ESPECÍFICOS PARA CADA SECCIÓN --- */
+
+        /* 1. ESTILO TEMAS (ACORDEÓN O LISTA) */
+        .topic-card {
+            background: white; border: 1px solid var(--gray-border);
+            padding: 20px; border-radius: 10px; margin-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .topic-info h4 { font-size: 1.1rem; margin-bottom: 5px; }
+        .btn-download {
+            background: var(--blue-light); color: var(--blue-primary);
+            padding: 8px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; font-weight: 600;
+        }
+
+        /* 2. ESTILO TAREAS */
+        .task-card {
+            background: white; border-left: 4px solid var(--blue-primary);
+            padding: 20px; border-radius: 4px; margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .status-badge {
+            background: #FEF3C7; color: #D97706; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;
+        }
+
+        /* 3. ESTILO NOTAS (TABLA) */
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--gray-border); }
+        th { background-color: #F1F5F9; color: #475569; }
+        .grade-pass { color: #16A34A; font-weight: bold; }
+        .grade-fail { color: #DC2626; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="cursos.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver a mis Cursos
+        </a>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <i class="fas fa-user-circle" style="font-size: 1.5rem; color:#ccc;"></i>
+            <span>Estudiante</span>
+        </div>
+    </header>
+
+    <div class="course-container">
+        
+        <aside class="sidebar">
+            <div class="course-header">
+                <h2>Metodologia de la Investigacion</h2>
+                <p>Ciclo III - 2026</p>
+            </div>
+
+            <button class="tab-btn active" onclick="openSection('temas', this)">
+                <i class="fas fa-book"></i> Temas de Clase
+            </button>
+            <button class="tab-btn" onclick="openSection('tareas', this)">
+                <i class="fas fa-pencil-alt"></i> Tareas y Trabajos
+            </button>
+            <button class="tab-btn" onclick="openSection('examenes', this)">
+                <i class="fas fa-clock"></i> Exámenes
+            </button>
+            <button class="tab-btn" onclick="openSection('notas', this)">
+                <i class="fas fa-chart-bar"></i> Mis Notas
+            </button>
+        </aside>
+
+        <main class="content-area">
+
+            <div id="temas" class="section-content active">
+                <h3 class="section-title">Contenido del Curso</h3>
+                
+                <div class="topic-card">
+                    <div class="topic-info">
+                        <h4>Semana 1: Introducción a la Psicología Evolutiva</h4>
+                        <p style="color:#666; font-size:0.9rem;">Conceptos básicos y teorías principales.</p>
+                    </div>
+                    <a href="#" class="btn-download"><i class="fas fa-download"></i> PDF Clase</a>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-info">
+                        <h4>Semana 2: Etapa Prenatal</h4>
+                        <p style="color:#666; font-size:0.9rem;">Desarrollo biológico y factores de riesgo.</p>
+                    </div>
+                    <a href="#" class="btn-download"><i class="fas fa-download"></i> PDF Clase</a>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-info">
+                        <h4>Semana 3: Primera Infancia</h4>
+                        <p style="color:#666; font-size:0.9rem;">Desarrollo motor y cognitivo (Piaget).</p>
+                    </div>
+                    <a href="#" class="btn-video" style="color:#E11D48;"><i class="fas fa-play-circle"></i> Ver Video</a>
+                </div>
+            </div>
+
+            <div id="tareas" class="section-content">
+                <h3 class="section-title">Actividades Pendientes</h3>
+
+                <div class="task-card">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                        <h4>Ensayo: Teoría del Apego</h4>
+                        <span class="status-badge">Pendiente</span>
+                    </div>
+                    <p style="margin-bottom:15px; color:#555;">Redactar un ensayo comparativo sobre Bowlby y Ainsworth.</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.85rem; color:#888;"><i class="far fa-calendar"></i> Vence: 28 Ene, 23:59</span>
+                        <button style="background:#3B82F6; color:white; border:none; padding:8px 16px; border-radius:5px; cursor:pointer;">Entregar Tarea</button>
+                    </div>
+                </div>
+
+                <div class="task-card" style="border-left-color: #16A34A;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                        <h4>Foro: Factores Ambientales</h4>
+                        <span class="status-badge" style="background:#DCFCE7; color:#166534;">Enviado</span>
+                    </div>
+                    <p style="margin-bottom:15px; color:#555;">Participación en el foro de discusión semanal.</p>
+                    <span style="font-size:0.85rem; color:#16A34A;"><i class="fas fa-check-circle"></i> Calificado: 18/20</span>
+                </div>
+            </div>
+
+            <div id="examenes" class="section-content">
+                <h3 class="section-title">Evaluaciones</h3>
+
+                <div class="topic-card" style="border-left: 4px solid #F59E0B;">
+                    <div class="topic-info">
+                        <h4>Examen Parcial (Teórico)</h4>
+                        <p style="color:#666;">Duración: 60 min | Intentos: 1</p>
+                    </div>
+                    <button style="background:#aaa; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:not-allowed;">No disponible</button>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-info">
+                        <h4>Quiz Semana 3</h4>
+                        <p style="color:#666;">Evaluación rápida de lecturas.</p>
+                    </div>
+                    <button style="background:#3B82F6; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer;">Iniciar Intento</button>
+                </div>
+            </div>
+
+            <div id="notas" class="section-content">
+                <h3 class="section-title">Registro de Calificaciones</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Evaluación</th>
+                            <th>Peso</th>
+                            <th>Fecha</th>
+                            <th>Nota</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Control de Lectura 1</td>
+                            <td>10%</td>
+                            <td>10/01/2026</td>
+                            <td class="grade-pass">16</td>
+                        </tr>
+                        <tr>
+                            <td>Informe de Caso Clínico</td>
+                            <td>20%</td>
+                            <td>15/01/2026</td>
+                            <td class="grade-pass">18</td>
+                        </tr>
+                        <tr>
+                            <td>Examen Parcial</td>
+                            <td>30%</td>
+                            <td>--/--/----</td>
+                            <td style="color:#999;">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function openSection(sectionId, btnElement) {
+            // 1. Ocultar todos los contenidos
+            var contents = document.querySelectorAll('.section-content');
+            contents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+
+            // 2. Quitar la clase 'active' de todos los botones
+            var buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+
+            // 3. Mostrar el contenido seleccionado
+            document.getElementById(sectionId).classList.add('active');
+
+            // 4. Activar el botón presionado
+            btnElement.classList.add('active');
+        }
+    </script>
+<style>
+    /* 1. Estilo para ocultar la página al inicio */
+    body {
+        opacity: 0; /* Invisible al principio */
+        transition: opacity 0.5s ease-in-out; /* Transición suave de medio segundo */
+    }
+
+    /* Clase para mostrar la página */
+    body.loaded {
+        opacity: 1; /* Totalmente visible */
+    }
+
+    /* 2. El Círculo de Carga (Loader) */
+    #page-loader {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: white;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none; /* Permite clicks si se traba */
+        transition: opacity 0.5s ease;
+    }
+
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3; /* Gris claro */
+        border-top: 5px solid #3B82F6; /* Azul Psicología */
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<div id="page-loader">
+    <div class="spinner"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // A. Cuando el HTML está listo, mostramos la página suavemente
+        setTimeout(function() {
+            document.body.classList.add('loaded'); // Hacemos visible el body
+            document.getElementById('page-loader').style.opacity = '0'; // Desvanecemos el loader
+            
+            // Quitamos el loader del HTML después de la animación para que no estorbe
+            setTimeout(() => {
+                document.getElementById('page-loader').style.display = 'none';
+            }, 500);
+        }, 100); // Pequeño retraso para asegurar que los estilos carguen
+
+        // B. Interceptamos los clics en los enlaces para hacer la salida suave
+        const links = document.querySelectorAll('a');
+        
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Solo aplicamos si el enlace es interno (no tiene target="_blank" ni es "#")
+                if (this.hostname === window.location.hostname && this.getAttribute('target') !== '_blank' && this.getAttribute('href') !== '#') {
+                    e.preventDefault(); // Detenemos el cambio brusco
+                    const targetUrl = this.href;
+
+                    // 1. Desvanecemos la página actual
+                    document.body.style.opacity = '0';
+                    
+                    // 2. Esperamos que termine la animación (0.5s) y cambiamos de página
+                    setTimeout(function() {
+                        window.location.href = targetUrl;
+                    }, 500);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
