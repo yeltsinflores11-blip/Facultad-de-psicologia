@@ -1,2 +1,0 @@
-# Facultad-de-psicologia
-aaa
