@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación Psicométrica - Campus Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --primary: #3B82F6; --secondary: #6366F1; --success: #10B981;
+            --danger: #EF4444; --warning: #F59E0B; --bg: #F1F5F9;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 40px; margin: 0; opacity: 0; transition: opacity 0.5s; }
+        body.loaded { opacity: 1; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        /* Tarjeta Estilo Biblioteca */
+        .card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #E2E8F0; }
+        
+        /* Botón Volver */
+        .btn-back { text-decoration: none; color: var(--primary); font-size: 0.9rem; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+
+        /* Vistas */
+        .view { display: none; }
+        .view.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Test Styles */
+        .progress-container { margin: 25px 0; }
+        .progress-bar { height: 10px; background: #F1F5F9; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.4s; }
+        
+        .question-box { background: #F8FAFC; padding: 25px; border-radius: 15px; border-left: 5px solid var(--primary); margin-top: 20px; }
+        .options { display: grid; gap: 12px; margin-top: 20px; }
+        .opt-btn { padding: 15px; border: 1px solid #E2E8F0; border-radius: 12px; background: white; cursor: pointer; transition: 0.2s; text-align: left; font-size: 1rem; font-weight: 500; }
+        .opt-btn:hover { background: #EFF6FF; border-color: var(--primary); }
+
+        /* Resultado Semáforo */
+        .score-circle { width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; color: white; margin: 20px auto; }
+        .status-pill { padding: 8px 20px; border-radius: 20px; font-weight: 700; display: inline-block; margin-bottom: 15px; }
+
+        /* Tabla Docente (Igual a Biblioteca) */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 15px; border-bottom: 2px solid #F1F5F9; color: #64748B; font-size: 0.8rem; text-transform: uppercase; }
+        td { padding: 15px; border-bottom: 1px solid #F1F5F9; }
+        .btn-excel { background: var(--success); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>
+            <a href="menu.html" class="btn-back"><i class="fas fa-chevron-left"></i> VOLVER AL CAMPUS</a>
+            <h1 style="color:#1E293B; margin:0; font-size: 2.2rem;">Evaluación Psicométrica</h1>
+        </div>
+        <div id="admin-btn-area"></div>
+    </div>
+
+    <div id="view-login" class="view active card" style="text-align: center;">
+        <i class="fas fa-id-card" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 20px;"></i>
+        <h2>Ingreso al Sistema</h2>
+        <p style="color: #64748B;">Ingrese su código de estudiante (202401 - 202420)</p>
+        <input type="text" id="student-code" placeholder="Código de 6 dígitos" style="width: 100%; max-width: 300px; padding: 15px; border-radius: 12px; border: 2px solid #E2E8F0; font-size: 1.1rem; text-align: center;">
+        <br>
+        <button onclick="iniciarTest()" style="margin-top: 20px; background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 12px; font-weight: bold; cursor: pointer;">INICIAR EXAMEN</button>
+    </div>
+
+    <div id="view-test" class="view card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong id="user-name" style="color: var(--primary);"></strong>
+            <span id="step-counter" style="color:#64748B; font-weight:bold;">1 / 20</span>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar"><div id="bar-fill" class="progress-fill"></div></div>
+        </div>
+        <div class="question-box">
+            <small id="cat-label" style="color:var(--primary); font-weight:bold;"></small>
+            <h3 id="q-text" style="margin:10px 0;"></h3>
+        </div>
+        <div class="options" id="opt-list"></div>
+    </div>
+
+    <div id="view-result" class="view card" style="text-align: center;">
+        <h2>Resultado de Evaluación</h2>
+        <div id="circle-res" class="score-circle">0</div>
+        <div id="pill-res" class="status-pill"></div>
+        <p id="desc-res" style="color:#64748B; padding: 0 40px;"></p>
+        <button onclick="location.reload()" style="background:var(--bg); border:none; padding:12px 25px; border-radius:10px; cursor:pointer; font-weight:bold;">FINALIZAR</button>
+    </div>
+
+    <div id="view-admin" class="view card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h3>Consolidado de Alumnos 2024</h3>
+            <button onclick="exportar()" class="btn-excel"><i class="fas fa-file-excel"></i> Exportar a Excel</button>
+        </div>
+        <table id="table-final">
+            <thead>
+                <tr>
+                    <th>Estudiante</th>
+                    <th>Código</th>
+                    <th>Puntaje</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="admin-tbody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const alumnos = [
+        { id: 1, code: "202401", name: "Chavez Ayala, Kaysin" },
+        { id: 2, code: "202402", name: "Alvarez, Maria" },
+        { id: 3, code: "202403", name: "Benitez, Jorge" },
+        { id: 4, code: "202404", name: "Castillo, Pedro" },
+        { id: 5, code: "202405", name: "Diaz, Ana" },
+        { id: 6, code: "202406", name: "Espinoza, Luis" },
+        { id: 7, code: "202407", name: "Fernandez, Sofia" },
+        { id: 8, code: "202408", name: "Garcia, Miguel" },
+        { id: 9, code: "202409", name: "Hernandez, Jose" },
+        { id: 10, code: "202410", name: "Iglesias, Carmen" },
+        { id: 11, code: "202411", name: "Jimenez, Raul" },
+        { id: 12, code: "202412", name: "Lopez, Elena" },
+        { id: 13, code: "202413", name: "Martinez, Carlos" },
+        { id: 14, code: "202414", name: "Nuñez, Patricia" },
+        { id: 15, code: "202415", name: "Ortega, David" },
+        { id: 16, code: "202416", name: "Perez, Juan" },
+        { id: 17, code: "202417", name: "Quispe, Rosa" },
+        { id: 18, code: "202418", name: "Ramirez, Fernando" },
+        { id: 19, code: "202419", name: "Sanchez, Lucía" },
+        { id: 20, code: "202420", name: "Torres, Manuel" }
+    ];
+
+    const preguntas = [
+        { q: "¿Te sientes con energía para tus tareas?", cat: "Beck - Bienestar", pts: 1 },
+        { q: "Prefiero trabajar solo que en equipo.", cat: "16PF - Personalidad", pts: 1 },
+        { q: "¿Puedes identificar patrones lógicos?", cat: "Raven - Inteligencia", pts: 1 },
+        { q: "¿Te preocupa el futuro excesivamente?", cat: "Beck - Ansiedad", pts: 1 },
+        { q: "¿Eres una persona sociable?", cat: "16PF - Extraversión", pts: 1 },
+        { q: "Encuentro rápido piezas de lógica.", cat: "Raven - Lógica", pts: 1 },
+        { q: "¿Tienes problemas de sueño?", cat: "Beck - Salud", pts: 1 },
+        { q: "¿Tomas la iniciativa al hablar?", cat: "16PF - Dominancia", pts: 1 },
+        { q: "¿Resuelves problemas matemáticos bien?", cat: "Raven - Análisis", pts: 1 },
+        { q: "¿Sientes satisfacción con tus logros?", cat: "Beck - Autoestima", pts: 1 },
+        { q: "Prefiero reglas estrictas siempre.", cat: "16PF - Normas", pts: 1 },
+        { q: "Entiendo diagramas abstractos.", cat: "Raven - Abstracción", pts: 1 },
+        { q: "¿Te sientes irritable a menudo?", cat: "Beck - Emoción", pts: 1 },
+        { q: "¿Te gusta ser el centro de atención?", cat: "16PF - Animación", pts: 1 },
+        { q: "Puedo visualizar objetos en 3D.", cat: "Raven - Espacial", pts: 1 },
+        { q: "¿Has perdido interés en tus hobbies?", cat: "Beck - Interés", pts: 1 },
+        { q: "¿Confías en las personas rápido?", cat: "16PF - Vigilancia", pts: 1 },
+        { q: "¿Tomas decisiones con lógica pura?", cat: "Raven - Cognición", pts: 1 },
+        { q: "¿Te sientes capaz de nuevos retos?", cat: "Beck - Capacidad", pts: 1 },
+        { q: "¿Eres perfeccionista en todo?", cat: "16PF - Perfeccionismo", pts: 1 }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let activeUser = null;
+
+    function iniciarTest() {
+        const cod = document.getElementById('student-code').value;
+        const student = alumnos.find(a => a.code === cod);
+        if(student) {
+            activeUser = student;
+            show('view-test');
+            document.getElementById('user-name').innerText = "Estudiante: " + student.name;
+            loadQ();
+        } else { alert("Código inválido (202401-202420)"); }
+    }
+
+    function loadQ() {
+        const q = preguntas[current];
+        document.getElementById('step-counter').innerText = `${current + 1} / 20`;
+        document.getElementById('cat-label').innerText = q.cat.toUpperCase();
+        document.getElementById('q-text').innerText = q.q;
+        document.getElementById('bar-fill').style.width = `${((current + 1) / 20) * 100}%`;
+
+        const list = document.getElementById('opt-list');
+        list.innerHTML = `
+            <button class="opt-btn" onclick="next(1)">Totalmente de acuerdo</button>
+            <button class="opt-btn" onclick="next(0.7)">De acuerdo</button>
+            <button class="opt-btn" onclick="next(0.3)">En desacuerdo</button>
+            <button class="opt-btn" onclick="next(0)">Totalmente en desacuerdo</button>
+        `;
+    }
+
+    function next(p) {
+        score += p;
+        current++;
+        if(current < 20) loadQ(); else finish();
+    }
+
+    function finish() {
+        show('view-result');
+        const total = Math.round(score);
+        const circle = document.getElementById('circle-res');
+        const pill = document.getElementById('pill-res');
+        const desc = document.getElementById('desc-res');
+        circle.innerText = total;
+
+        if(total >= 14) {
+            circle.style.background = "var(--success)";
+            pill.innerText = "ESTADO ÓPTIMO"; pill.style.background = "#D1FAE5"; pill.style.color = "#065F46";
+            desc.innerText = "Felicidades. Sus indicadores muestran un equilibrio psicológico excelente.";
+        } else if(total >= 10) {
+            circle.style.background = "var(--warning)";
+            pill.innerText = "ESTADO REGULAR"; pill.style.background = "#FEF3C7"; pill.style.color = "#92400E";
+            desc.innerText = "Se encuentra en un rango estable, aunque hay puntos de mejora en su bienestar.";
+        } else {
+            circle.style.background = "var(--danger)";
+            pill.innerText = "ATENCIÓN REQUERIDA"; pill.style.background = "#FEE2E2"; pill.style.color = "#991B1B";
+            desc.innerText = "Sus resultados sugieren que sería beneficioso conversar con un especialista.";
+        }
+
+        let db = JSON.parse(localStorage.getItem('psico_db')) || {};
+        db[activeUser.code] = total;
+        localStorage.setItem('psico_db', JSON.stringify(db));
+    }
+
+    function show(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add('loaded');
+        if(localStorage.getItem('userRole') === 'teacher') {
+            show('view-admin');
+            const tbody = document.getElementById('admin-tbody');
+            const db = JSON.parse(localStorage.getItem('psico_db')) || {};
+            alumnos.forEach(a => {
+                const n = db[a.code] !== undefined ? db[a.code] : '---';
+                let st = '<span style="color:#94A3B8">Pendiente</span>';
+                if(n !== '---') {
+                    if(n >= 14) st = '<b style="color:var(--success)">Verde (Óptimo)</b>';
+                    else if(n >= 10) st = '<b style="color:var(--warning)">Amarillo (Medio)</b>';
+                    else st = '<b style="color:var(--danger)">Rojo (Bajo)</b>';
+                }
+                tbody.innerHTML += `<tr><td><b>${a.name}</b></td><td>${a.code}</td><td><b>${n}</b></td><td>${st}</td></tr>`;
+            });
+        }
+    });
+
+    function exportar() {
+        const wb = XLSX.utils.table_to_book(document.getElementById("table-final"));
+        XLSX.writeFile(wb, "Reporte_Psicologico_2024.xlsx");
+    }
+</script>
+</body>
+</html>
